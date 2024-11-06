@@ -67,6 +67,7 @@
     "string": "c",
     "string_view": "c",
     "random": "c",
-    "push_swap.h": "c"
+    "push_swap.h": "c",
+    "unistd.h": "c"
   }
 }
