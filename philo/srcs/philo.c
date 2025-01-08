@@ -9,16 +9,24 @@ int	is_dead(t_philo *philos)
 	{
 		if (philosopher_dead(&philos[i], philos[i].death_time))
 		{
-			print_message('d', philos[i].id, *&philos[i].start_time);
+			print_message('d', philos);
 			pthread_mutex_lock(philos[0].dead_lock);
 			*philos->dead = 1;
 			pthread_mutex_unlock(philos[0].dead_lock);
 			return (1);
 		}
+		pthread_mutex_lock(philos[0].dead_lock);
+		if (*philos->dead == 1)
+		{
+			pthread_mutex_unlock(philos[0].dead_lock);
+			return (1);
+		}
+		pthread_mutex_unlock(philos[0].dead_lock);
 		i++;
 	}
 	return (0);
 }
+
 
 int is_full(t_philo *philos)
 {
@@ -36,14 +44,20 @@ int is_full(t_philo *philos)
 
 void	*philosopher_routine(void *ptr)
 {
-    t_philo	*philo;
+	t_philo	*philo;
 
-    philo = (t_philo *)ptr;
-    while (!(*philo->dead))
-    {
-        eat(philo);
+	philo = (t_philo *)ptr;
+	while (1)
+	{
+		if (is_he_dead(philo))
+			break ;
+		eat(philo);
+		if (is_he_dead(philo))
+			break ;
 		think(philo);
+		if (is_he_dead(philo))
+			break ;
 		ft_sleep(philo);
-    }
-    return (NULL);
+	}
+	return (NULL);
 }

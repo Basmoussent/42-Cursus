@@ -60,19 +60,30 @@ void	ft_putnbr_fd(int nb, int fd)
 	}
 }
 
-void	print_message(char c, int id, long long start_time)
+void	print_message(char c, t_philo *philo)
 {
+	pthread_mutex_lock(philo->write_lock);
 	if (c == 'd')
-		printf("%lld %d died\n", get_timestamp() - start_time , id);
+		printf("%lld %d died\n", get_timestamp() - philo->start_time , philo->id);
 	else if (c == 'e')
-		printf("%lld %d is eating\n", get_timestamp() - start_time, id);
+		printf("%lld %d is eating\n", get_timestamp() - philo->start_time, philo->id);
 	else if (c == 't')
-		printf("%lld %d is thinking\n", get_timestamp() - start_time, id);
+		printf("%lld %d is thinking\n", get_timestamp() - philo->start_time, philo->id);
 	else if (c == 's')
-		printf("%lld %d is sleeping\n", get_timestamp() - start_time, id);
+		printf("%lld %d is sleeping\n", get_timestamp() - philo->start_time, philo->id);
 	else if (c == 'f')
-		printf("%lld %d has taken a fork\n", get_timestamp() - start_time, id);
-
-
+		printf("%lld %d has taken a fork\n", get_timestamp() - philo->start_time, philo->id);
+	pthread_mutex_unlock(philo->write_lock);
 }
 
+int	is_he_dead(t_philo *philo)
+{
+	pthread_mutex_lock(philo->dead_lock);
+	if (*philo->dead == 1)
+	{
+		pthread_mutex_unlock(philo->dead_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->dead_lock);
+	return (0);
+}

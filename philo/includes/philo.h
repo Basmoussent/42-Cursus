@@ -49,11 +49,11 @@ void		init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks, c
 void 		init_threads(t_program *program, pthread_mutex_t *forks);
 void		*philosopher_routine(void *ptr);
 int			philosopher_dead(t_philo *philo, size_t time_to_die);
-void	print_message(char c, int id, long long start_time);
+void		print_message(char c, t_philo *philo);
 void 		ft_sleep(t_philo *philo);
 void		think(t_philo *philo);
 void		eat(t_philo *philo);
-
+int			is_he_dead(t_philo *philo);
 enum {
 	KO = 1,
 	OK = 0
