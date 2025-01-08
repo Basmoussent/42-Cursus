@@ -54,6 +54,8 @@ void 		ft_sleep(t_philo *philo);
 void		think(t_philo *philo);
 void		eat(t_philo *philo);
 int			is_he_dead(t_philo *philo);
+void		detach_threads(t_philo *philosophers, int num_philosophers);
+
 enum {
 	KO = 1,
 	OK = 0

@@ -12,32 +12,31 @@ void	*monitor_it(void *ptr)
 		if (philos->nb_to_eat != -1 && is_full(philos))
 			break;
 	}
+	//detach_threads(philos, philos[0].nb_philos);
 	return (ptr);
 }
 
-void init_threads(t_program *program, pthread_mutex_t *forks)
-{
-	pthread_t	monitor;
-	int			i;
-	int			j;
+void init_threads(t_program *program, pthread_mutex_t *forks) {
+    pthread_t monitor;
+    int i;
+    int j;
 
-	i = -1;
-	while (++i < program->philos[0].nb_philos)
-	{
-		if (pthread_create(&program->philos[i].thread, NULL, &philosopher_routine, &program->philos[i]) != 0)
-		{
-			j = -1;
-			while (++j < i)
-				pthread_mutex_destroy(&forks[j]);
-			return;
-		}
-	}
-	if (pthread_create(&monitor, NULL, &monitor_it, program->philos) != 0)
-	{
-		j = -1;
-		while (++j < program->philos[0].nb_philos)
-			pthread_mutex_destroy(&forks[j]);
-		return;
-	}
-	pthread_join(monitor, NULL);
+    i = -1;
+    while (++i < program->philos[0].nb_philos) {
+        if (pthread_create(&program->philos[i].thread, NULL, &philosopher_routine, &program->philos[i]) != 0) {
+            j = -1;
+            while (++j < i) {
+                pthread_mutex_destroy(&forks[j]);
+            }
+            return;
+        }
+    }
+    if (pthread_create(&monitor, NULL, &monitor_it, program->philos) != 0) {
+        j = -1;
+        while (++j < program->philos[0].nb_philos) {
+            pthread_mutex_destroy(&forks[j]);
+        }
+        return;
+    }
+    pthread_join(monitor, NULL);
 }

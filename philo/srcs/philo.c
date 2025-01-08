@@ -45,7 +45,7 @@ int is_full(t_philo *philos)
 void	*philosopher_routine(void *ptr)
 {
 	t_philo	*philo;
-
+	
 	philo = (t_philo *)ptr;
 	while (1)
 	{

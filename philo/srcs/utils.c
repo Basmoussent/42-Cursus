@@ -87,3 +87,19 @@ int	is_he_dead(t_philo *philo)
 	pthread_mutex_unlock(philo->dead_lock);
 	return (0);
 }
+
+void	detach_threads(t_philo *philosophers, int num_philosophers)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_philosophers)
+	{
+		if (pthread_detach(philosophers[i].thread) != 0)
+		{
+			perror("Error detaching thread");
+			exit(1);
+		}
+		i++;
+	}
+}
