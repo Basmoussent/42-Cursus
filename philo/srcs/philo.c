@@ -32,6 +32,8 @@ int is_full(t_philo *philos)
 {
 	int	i;
 
+	if (philos[0].nb_to_eat == -1)
+		return (KO);
 	i = 0;
 	while (i <= philos[0].nb_philos)
 	{

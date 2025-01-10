@@ -18,7 +18,6 @@ int	main(int argc, char *argv[])
 	init_forks(forks, philo_num);
 	init_philos(philos, &program, forks, argv);
 	init_threads(&program, forks);
-	//detach_threads(philos, philo_num);
 	free(philos);
 	free(forks);
 	return (OK);

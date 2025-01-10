@@ -63,15 +63,15 @@ void	ft_putnbr_fd(int nb, int fd)
 void	print_message(char c, t_philo *philo)
 {
 	pthread_mutex_lock(philo->write_lock);
-	if (c == 'd')
+	if (c == 'd' && !is_he_dead(philo))
 		printf("%lld %d died\n", get_timestamp() - philo->start_time , philo->id);
-	else if (c == 'e')
+	else if (c == 'e' && !is_he_dead(philo))
 		printf("%lld %d is eating\n", get_timestamp() - philo->start_time, philo->id);
-	else if (c == 't')
+	else if (c == 't' && !is_he_dead(philo))
 		printf("%lld %d is thinking\n", get_timestamp() - philo->start_time, philo->id);
-	else if (c == 's')
+	else if (c == 's' && !is_he_dead(philo))
 		printf("%lld %d is sleeping\n", get_timestamp() - philo->start_time, philo->id);
-	else if (c == 'f')
+	else if (c == 'f' && !is_he_dead(philo))
 		printf("%lld %d has taken a fork\n", get_timestamp() - philo->start_time, philo->id);
 	pthread_mutex_unlock(philo->write_lock);
 }
@@ -86,20 +86,4 @@ int	is_he_dead(t_philo *philo)
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 	return (0);
-}
-
-void	detach_threads(t_philo *philosophers, int num_philosophers)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_philosophers)
-	{
-		if (pthread_detach(philosophers[i].thread) != 0)
-		{
-			perror("Error detaching thread");
-			exit(1);
-		}
-		i++;
-	}
 }

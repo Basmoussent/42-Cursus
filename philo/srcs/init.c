@@ -37,7 +37,7 @@ void edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks)
 	else
 		philos[i].r_fork = &forks[i - 1];
 }
-void init_forks(pthread_mutex_t *forks, int philo_num)
+void	init_forks(pthread_mutex_t *forks, int philo_num)
 {
 	int	i;
 
