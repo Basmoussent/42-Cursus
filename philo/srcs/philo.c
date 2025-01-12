@@ -2,7 +2,7 @@
 
 int	is_dead(t_philo *philos)
 {
-	int	i;
+    int	i;
 
 	i = 0;
 	while (i < philos[0].nb_philos)

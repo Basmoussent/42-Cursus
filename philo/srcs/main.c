@@ -14,6 +14,11 @@ int	main(int argc, char *argv[])
 	philos = malloc(sizeof(t_philo) * philo_num);
 	forks = malloc(sizeof(pthread_mutex_t) * philo_num);
 	if (!philos || !forks) return (KO);
+	printf("philo_num: %d\n", philo_num);
+	printf("eat_time: %d\n", ft_atoi(argv[2]));
+	printf("sleep_time: %d\n", ft_atoi(argv[3]));
+	printf("death_time: %d\n", ft_atoi(argv[4]));
+	if (argc == 6) printf("nb_to_eat: %d\n", ft_atoi(argv[5]));
 	init_program(&program, philos);
 	init_forks(forks, philo_num);
 	init_philos(philos, &program, forks, argv);

@@ -7,8 +7,9 @@ void	*monitor_it(void *ptr)
 	philos = (t_philo *)ptr;
 	while (1)
 	{
-		if (is_dead(philos) || is_full(philos))
+		if (is_dead(philos))
 			break ;
+        usleep(1);
 	}
 	return (ptr);
 }
