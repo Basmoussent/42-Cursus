@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 17:34:26 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/01/14 17:43:55 by bdenfir          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks, char **argv)
+void	init_philos(t_philo *philos, t_program *program,
+pthread_mutex_t *forks, char **argv)
 {
 	int	i;
 
@@ -26,7 +39,7 @@ void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks, ch
 	}
 }
 
-void edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks)
+void	edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks)
 {
 	if (argv[5])
 		philos[i].nb_to_eat = ft_atoi(argv[5]);
@@ -37,6 +50,7 @@ void edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks)
 	else
 		philos[i].r_fork = &forks[i - 1];
 }
+
 void	init_forks(pthread_mutex_t *forks, int philo_num)
 {
 	int	i;
@@ -52,7 +66,7 @@ void	init_forks(pthread_mutex_t *forks, int philo_num)
 void	init_program(t_program *program, t_philo *philos)
 {
 	struct timeval	tv;
-	
+
 	program->dead_flag = 0;
 	program->philos = philos;
 	gettimeofday(&tv, NULL);

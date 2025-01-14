@@ -1,49 +1,58 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bdenfir <bdenfir@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 20:21:07 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/01/12 13:53:09 by bdenfir          ###   ########.fr       */
-/*                                                                            */
+/*									  */
+/*							:::	 ::::::::   */
+/*   actions.c					  :+:   :+:	:+:   */
+/*						  +:+ +:+	   +:+	*/
+/*   By: bdenfir <bdenfir@42.fr>					+#+  +:+	   +#+	*/
+/*						+#+#+#+#+#+   +#+	 */
+/*   Created: 2025/01/07 20:21:07 by bdenfir		   #+#  #+#		  */
+/*   Updated: 2025/01/14 17:34:16 by bdenfir		  ###   ########.fr	*/
+/*									  */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void eat(t_philo *philo)
+void	eat(t_philo *philo)
 {
-    if (philo->l_fork < philo->r_fork && !is_he_dead(philo)) {
-        pthread_mutex_lock(philo->l_fork);
-        print_message('f', philo);
-        pthread_mutex_lock(philo->r_fork);
-        print_message('f', philo);
-    } else if (!is_he_dead(philo)) {
-        pthread_mutex_lock(philo->r_fork);
-        print_message('f', philo);
-        pthread_mutex_lock(philo->l_fork);
-        print_message('f', philo);
-    }
+	get_that_fork(philo);
+	pthread_mutex_lock(philo->meal_lock);
+	philo->eating = 1;
+	philo->last_meal = get_timestamp();
+	print_message('e', philo);
+	pthread_mutex_unlock(philo->meal_lock);
+	usleep(philo->eat_time * 1000);
+	if (philo->l_fork < philo->r_fork)
+	{
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->l_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+	}
+	pthread_mutex_lock(philo->meal_lock);
+	philo->eating = 0;
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->meal_lock);
+}
 
-    pthread_mutex_lock(philo->meal_lock);
-    philo->eating = 1;
-    philo->last_meal = get_timestamp();
-    print_message('e', philo);
-    pthread_mutex_unlock(philo->meal_lock);
-
-    usleep(philo->eat_time * 1000);
-    if (philo->l_fork < philo->r_fork) {
-        pthread_mutex_unlock(philo->r_fork);
-        pthread_mutex_unlock(philo->l_fork);
-    } else {
-        pthread_mutex_unlock(philo->l_fork);
-        pthread_mutex_unlock(philo->r_fork);
-    }
-    pthread_mutex_lock(philo->meal_lock);
-    philo->eating = 0;
-    philo->meals_eaten++;
-    pthread_mutex_unlock(philo->meal_lock);
+void get_that_fork(t_philo *philo)
+{
+	if (philo->l_fork < philo->r_fork)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		print_message('f', philo);
+		pthread_mutex_lock(philo->r_fork);
+		print_message('f', philo);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->r_fork);
+		print_message('f', philo);
+		pthread_mutex_lock(philo->l_fork);
+		print_message('f', philo);
+	}
 }
 
 void	think(t_philo *philo)
@@ -52,7 +61,7 @@ void	think(t_philo *philo)
 	usleep(philo->sleep_time * 1000);
 }
 
-void ft_sleep(t_philo *philo)
+void	ft_sleep(t_philo *philo)
 {
 	print_message('s', philo);
 	usleep(philo->sleep_time * 1000);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   utils.c											:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: bdenfir <bdenfir@42.fr>					+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2025/01/14 17:42:14 by bdenfir		   #+#	#+#			 */
+/*   Updated: 2025/01/14 17:42:15 by bdenfir		  ###   ########.fr	   */
+/*																			*/
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_isdigit(int str)
@@ -62,22 +74,21 @@ void	ft_putnbr_fd(int nb, int fd)
 
 void	print_message(char c, t_philo *philo)
 {
-    long long current_time = get_timestamp();
-    long long elapsed_time = current_time - philo->start_time;
+	long long	elapsed_time;
 
-    pthread_mutex_lock(philo->write_lock);
-    printf("%lld - %lld = %lld\n", current_time, philo->start_time, elapsed_time);
-    if (c == 'd' && !is_he_dead(philo))
-        printf("%lld %d died\n", elapsed_time, philo->id);
-    else if (c == 'e' && !is_he_dead(philo))
-        printf("%lld %d is eating\n", elapsed_time, philo->id);
-    else if (c == 't' && !is_he_dead(philo))
-        printf("%lld %d is thinking\n", elapsed_time, philo->id);
-    else if (c == 's' && !is_he_dead(philo))
-        printf("%lld %d is sleeping\n", elapsed_time, philo->id);
-    else if (c == 'f' && !is_he_dead(philo))
-        printf("%lld %d has taken a fork\n", elapsed_time, philo->id);
-    pthread_mutex_unlock(philo->write_lock);
+	elapsed_time = get_timestamp() - philo->start_time;
+	pthread_mutex_lock(philo->write_lock);
+	if (c == 'd' && !is_he_dead(philo))
+		printf("%lld %d died\n", elapsed_time, philo->id);
+	else if (c == 'e' && !is_he_dead(philo))
+		printf("%lld %d is eating\n", elapsed_time, philo->id);
+	else if (c == 't' && !is_he_dead(philo))
+		printf("%lld %d is thinking\n", elapsed_time, philo->id);
+	else if (c == 's' && !is_he_dead(philo))
+		printf("%lld %d is sleeping\n", elapsed_time, philo->id);
+	else if (c == 'f' && !is_he_dead(philo))
+		printf("%lld %d has taken a fork\n", elapsed_time, philo->id);
+	pthread_mutex_unlock(philo->write_lock);
 }
 
 int	is_he_dead(t_philo *philo)

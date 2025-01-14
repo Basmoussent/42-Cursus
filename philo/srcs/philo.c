@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/14 17:33:48 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/01/14 18:18:25 by bdenfir          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	is_dead(t_philo *philos)
 {
-    int	i;
+	int	i;
 
 	i = 0;
 	while (i < philos[0].nb_philos)
@@ -27,38 +39,43 @@ int	is_dead(t_philo *philos)
 	return (0);
 }
 
-
-int is_full(t_philo *philos)
+int	is_full(t_philo *philos)
 {
 	int	i;
+	int	full_count;
 
-	if (philos[0].nb_to_eat == -1)
-		return (KO);
 	i = 0;
-	while (i <= philos[0].nb_philos)
+	full_count = 0;
+	while (i < philos[0].nb_philos)
 	{
-		if (philos[i].meals_eaten != philos[i].nb_to_eat)
-			return (KO);
+		pthread_mutex_lock(philos[i].meal_lock);
+		if (philos[i].meals_eaten >= philos[i].nb_to_eat
+			&& philos[i].nb_to_eat != -1)
+			full_count++;
+		pthread_mutex_unlock(philos[i].meal_lock);
 		i++;
 	}
-	return (OK);
+	if (full_count == philos[0].nb_philos)
+	{	
+		pthread_mutex_lock(philos[0].dead_lock);
+		*philos->dead = 1;
+		pthread_mutex_unlock(philos[0].dead_lock);
+		return (1);
+	}
+	return (0);
 }
 
 void	*philosopher_routine(void *ptr)
 {
 	t_philo	*philo;
-	
+
 	philo = (t_philo *)ptr;
-	while (1)
+	if (philo->id % 2)
+		usleep(15000);
+	while (!is_he_dead(philo))
 	{
-		if (is_he_dead(philo))
-			break ;
 		eat(philo);
-		if (is_he_dead(philo))
-			break ;
 		think(philo);
-		if (is_he_dead(philo))
-			break ;
 		ft_sleep(philo);
 	}
 	return (NULL);

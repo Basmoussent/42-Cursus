@@ -46,14 +46,18 @@ void		init_program(t_program *program, t_philo *philos);
 void 		init_forks(pthread_mutex_t *forks, int philo_num);
 void 		edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks);
 void		init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks, char **argv);
-void 		init_threads(t_program *program, pthread_mutex_t *forks);
+void init_threads(t_program *program, pthread_mutex_t *forks);
+void destroy_mutex(int i, t_program *program, pthread_mutex_t *forks);
 void		*philosopher_routine(void *ptr);
 int			philosopher_dead(t_philo *philo, size_t time_to_die);
 void		print_message(char c, t_philo *philo);
 void 		ft_sleep(t_philo *philo);
 void		think(t_philo *philo);
-void		eat(t_philo *philo);
+void eat(t_philo *philo);
+void get_that_fork(t_philo *philo);
 int			is_he_dead(t_philo *philo);
+void one_philo(int death_time);
+
 
 enum {
 	KO = 1,
