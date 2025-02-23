@@ -1,39 +1,45 @@
-CC = gcc
-CFLAGS = -Werror
-INCLUDES = -I/usr/include -Imlx
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
-SRC_DIR = srcs
+.PHONY: all bonus clean fclean re pipex_m pipex_b norme
 
-MLX_LIB = mlx/libmlx.a
+DIR_M := mandatory
+DIR_B := bonus
+DIR_MLX := mlx
 
-SRC_FILES = $(SRC_DIR)/main.c
-OBJ_FILES = $(SRC_DIR)/main.o
+# Default target
+all: pipex_m
 
-NAME = so_long
+# Bonus target
+bonus: pipex_b
 
-.PHONY: all clean fclean re
+library:
+	@echo "Building in mlx library"
+	@$(MAKE) -C $(DIR_MLX)
 
-all: $(NAME)
+pipex_m: library
+	@echo "Building in so_long..."
+	@$(MAKE) -C $(DIR_M)
 
-.c.o:
-	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
-
-$(NAME): $(OBJ_FILES)
-	$(CC) $(OBJ)  -o $(NAME) $(OBJ_FILES) $(MLX_FLAGS)
+pipex_b: library
+	@echo "Building in so_long..."
+	@$(MAKE) -C $(DIR_B)
 
 clean:
-	rm -f $(OBJ_FILES)
+	@echo "Cleaning in all directories..."
+	@$(MAKE) -C $(DIR_M) clean
+	@$(MAKE) -C $(DIR_B) clean
 
-fclean: clean
-	rm $(NAME)
+fclean:
+	@echo "Fully cleaning in all directories..."
+	@$(MAKE) -C $(DIR_M) fclean
+	@$(MAKE) -C $(DIR_B) fclean
 
 norme:
-	rm -f $(OBJ_FILES) $(NAME)
-	norminette $(SRC_FILES) $(H_FILES)
-
-update:
-	git add .
-	git commit
-	git push
+	@echo "Norme check for Mandatory folder ..."
+	norminette $(DIR_M)/srcs
+	norminette $(DIR_M)/include/struct.h
+	@echo "Norme check for libft folder ..."
+	norminette libft
+	@echo "Norme check for bonus folder ..."
+	norminette $(DIR_B)/srcs
+	norminette $(DIR_B)/include/struct.h
 
 re: fclean all

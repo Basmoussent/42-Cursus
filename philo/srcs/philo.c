@@ -6,7 +6,7 @@
 /*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:33:48 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/01/14 18:18:25 by bdenfir          ###   ########.fr       */
+/*   Updated: 2025/01/14 19:05:44 by bdenfir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,18 @@ int	is_full(t_philo *philos)
 	return (0);
 }
 
-void	*philosopher_routine(void *ptr)
+void *philosopher_routine(void *ptr)
 {
-	t_philo	*philo;
+    t_philo *philo = (t_philo *)ptr;
 
-	philo = (t_philo *)ptr;
-	if (philo->id % 2)
-		usleep(15000);
-	while (!is_he_dead(philo))
-	{
-		eat(philo);
-		think(philo);
-		ft_sleep(philo);
-	}
-	return (NULL);
+    if (philo->id % 2)
+        usleep(15000);
+    while (!is_he_dead(philo))
+    {
+        eat(philo);
+        think(philo);
+        ft_sleep(philo);
+    }
+    return (NULL);
 }
+

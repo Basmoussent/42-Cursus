@@ -32,7 +32,7 @@ NAME = pipex
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT_LIB) $(H_FILES)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT_LIB)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -42,7 +42,7 @@ $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	rm -f $(OBJ_FILES)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean

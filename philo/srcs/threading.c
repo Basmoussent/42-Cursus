@@ -21,6 +21,7 @@ void	*monitor_it(void *ptr)
 	{
 		if (is_dead(philos) || is_full(philos))
 			break ;
+		usleep(1000);
 	}
 	return (ptr);
 }

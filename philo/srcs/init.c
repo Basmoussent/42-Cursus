@@ -6,7 +6,7 @@
 /*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:34:26 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/01/14 17:43:55 by bdenfir          ###   ########.fr       */
+/*   Updated: 2025/01/14 19:12:34 by bdenfir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 void	init_philos(t_philo *philos, t_program *program,
 pthread_mutex_t *forks, char **argv)
 {
-	int	i;
+    int	i;
 
-	i = 0;
-	while (i < ft_atoi(argv[1]))
-	{
-		philos[i].id = i;
-		philos[i].eating = 0;
-		philos[i].meals_eaten = 0;
-		philos[i].death_time = ft_atoi(argv[2]);
-		philos[i].eat_time = ft_atoi(argv[3]);
-		philos[i].sleep_time = ft_atoi(argv[4]);
-		philos[i].nb_philos = ft_atoi(argv[1]);
-		philos[i].write_lock = &program->write_lock;
-		philos[i].dead_lock = &program->dead_lock;
-		philos[i].meal_lock = &program->meal_lock;
-		philos[i].dead = &program->dead_flag;
-		philos[i].l_fork = &forks[i];
-		philos[i].start_time = program->start_time;
-		philos[i].last_meal = get_timestamp();
-		edge_philo(argv, philos, i, forks);
-		i++;
-	}
+    i = 0;
+    while (i < ft_atoi(argv[1]))
+    {
+        philos[i].id = i;
+        philos[i].eating = 0;
+        philos[i].meals_eaten = 0;
+        philos[i].death_time = (long long)ft_atoi(argv[2]);
+        philos[i].eat_time = (long long)ft_atoi(argv[3]);
+        philos[i].sleep_time = (long long)ft_atoi(argv[4]);
+        philos[i].nb_philos = (long long)ft_atoi(argv[1]);
+        philos[i].write_lock = &program->write_lock;
+        philos[i].dead_lock = &program->dead_lock;
+        philos[i].meal_lock = &program->meal_lock;
+        philos[i].dead = &program->dead_flag;
+        philos[i].l_fork = &forks[i];
+        philos[i].start_time = program->start_time;
+        philos[i].last_meal = get_timestamp();
+        edge_philo(argv, philos, i, forks);
+        i++;
+    }
 }
 
 void	edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks)

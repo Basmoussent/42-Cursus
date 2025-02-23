@@ -1,4 +1,6 @@
 *.png
 *.o
 *.out
+*.py
 ./trash
+*.do
