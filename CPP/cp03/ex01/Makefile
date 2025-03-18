@@ -1,4 +1,4 @@
-SRC = main.cpp Fixed.cpp bsp.cpp Point.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
 NAME = Fixed
 CC = c++ -Wall -Wextra -Werror -std=c++98
 

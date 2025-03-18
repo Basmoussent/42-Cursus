@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Point.hpp                                          :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdenfir <bdenfir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:56:05 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/03/18 17:47:57 by bdenfir          ###   ########.fr       */
+/*   Created: 2025/03/18 22:05:56 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/03/18 22:20:14 by bdenfir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <string>
-#include <iostream>
-#include "Fixed.hpp"
+#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
-class Point
+
+class FragTrap: public ClapTrap
 {
 	private:
-		const Fixed _x;
-		const Fixed _y;
 
 	public:
-		Point();
-		Point(const float x, const float y);
-		Point(const Point& copy);
+		FragTrap();
+		FragTrap(const FragTrap &copy);
+		FragTrap(std::string name);
 
-		~Point();
+		virtual ~FragTrap();
 
-		Point &operator=(const Point &src);
+		FragTrap &operator=(const FragTrap &src);
 
-		const Fixed &getX(void)const;
-		const Fixed &getY(void)const;
+		void highFiveGuys(void);
 
 };
 
-std::ostream	&operator<<(std::ostream &o, Point const point);
-bool bsp( Point const a, Point const b, Point const c, Point const point);

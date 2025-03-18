@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Point.hpp                                          :+:      :+:    :+:   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdenfir <bdenfir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 14:56:05 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/03/18 17:47:57 by bdenfir          ###   ########.fr       */
+/*   Created: 2025/03/18 19:41:00 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/03/18 21:56:17 by bdenfir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <string>
 #include <iostream>
-#include "Fixed.hpp"
+#include <string>
 
-class Point
+class ClapTrap
 {
-	private:
-		const Fixed _x;
-		const Fixed _y;
-
+	protected:
+		std::string _name;
+		int _hitPoints;
+		int _energyPoints;
+		int _attackDamage;
 	public:
-		Point();
-		Point(const float x, const float y);
-		Point(const Point& copy);
-
-		~Point();
-
-		Point &operator=(const Point &src);
-
-		const Fixed &getX(void)const;
-		const Fixed &getY(void)const;
-
+		ClapTrap();
+		ClapTrap(std::string name);
+		ClapTrap(const ClapTrap &copy);
+		~ClapTrap();
+		ClapTrap &operator=(const ClapTrap &src);
+		void attack(const std::string &target);
+		void takeDamage(unsigned int amount);
+		void beRepaired(unsigned int amount);
 };
-
-std::ostream	&operator<<(std::ostream &o, Point const point);
-bool bsp( Point const a, Point const b, Point const c, Point const point);
