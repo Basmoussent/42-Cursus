@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                      */
-/*              :::      ::::::::   */
-/*   threading.c                    :+:      :+:    :+:   */
-/*                +:+ +:+    +:+     */
-/*   By: bdenfir <bdenfir@42.fr>            +#+  +:+       +#+  */
-/*            +#+#+#+#+#+   +#+    */
-/*   Created: 2025/01/14 17:34:59 by bdenfir       #+#    #+#        */
-/*   Updated: 2025/01/14 17:35:47 by bdenfir      ###   ########.fr       */
-/*                      */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   threading.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 13:42:13 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/02/24 13:42:14 by bdenfir          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
@@ -21,7 +21,7 @@ void	*monitor_it(void *ptr)
 	{
 		if (is_dead(philos) || is_full(philos))
 			break ;
-		usleep(1000);
+		usleep(50);
 	}
 	return (ptr);
 }
@@ -66,17 +66,16 @@ void	destroy_mutex(int i, t_program *program, pthread_mutex_t *forks)
 	j = -1;
 	while (++j < program->philos[0].nb_philos)
 	{
-		if (&forks[j])
-			pthread_mutex_destroy(&forks[j]);
+		pthread_mutex_destroy(&forks[j]);
 	}
 }
 
-void one_philo(int death_time)
+void	one_philo(int death_time)
 {
 	long long	start;
 
 	start = get_timestamp();
 	printf("0 0 has taken a fork\n");
 	usleep(death_time * 1000);
-	printf("%lld 0 has died\n", get_timestamp() - start);	
+	printf("%lld 0 has died\n", get_timestamp() - start);
 }

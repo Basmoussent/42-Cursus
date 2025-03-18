@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/23 15:18:20 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/02/24 13:23:10 by bdenfir          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 # include <pthread.h>
@@ -38,20 +50,23 @@ typedef struct s_program
 
 int			ft_isdigit(int str);
 int			ft_atoi(const char *str);
-void 		edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks);
+void		edge_philo(char **argv,
+				t_philo *philos, int i, pthread_mutex_t *forks);
 int			is_dead(t_philo *philos);
-int 		is_full(t_philo *philos);
-long long	get_timestamp();
+int			is_full(t_philo *philos);
+long long	get_timestamp(void);
 void		init_program(t_program *program, t_philo *philos);
-void 		init_forks(pthread_mutex_t *forks, int philo_num);
-void 		edge_philo(char **argv, t_philo *philos, int i, pthread_mutex_t *forks);
-void		init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks, char **argv);
+void		init_forks(pthread_mutex_t *forks, int philo_num);
+void		edge_philo(char **argv, t_philo *philos,
+				int i, pthread_mutex_t *forks);
+void		init_philos(t_philo *philos, t_program *program,
+				pthread_mutex_t *forks, char **argv);
 void		init_threads(t_program *program, pthread_mutex_t *forks);
 void		destroy_mutex(int i, t_program *program, pthread_mutex_t *forks);
 void		*philosopher_routine(void *ptr);
 int			philosopher_dead(t_philo *philo, long long time_to_die);
 void		print_message(char c, t_philo *philo);
-void 		ft_sleep(t_philo *philo);
+void		ft_sleep(t_philo *philo);
 void		think(t_philo *philo);
 void		eat(t_philo *philo);
 void		get_that_fork(t_philo *philo);

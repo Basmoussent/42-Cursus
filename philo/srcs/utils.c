@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   utils.c											:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: bdenfir <bdenfir@42.fr>					+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/01/14 17:42:14 by bdenfir		   #+#	#+#			 */
-/*   Updated: 2025/01/14 17:42:15 by bdenfir		  ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bdenfir <bdenfir@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/23 15:31:32 by bdenfir           #+#    #+#             */
+/*   Updated: 2025/02/23 15:31:53 by bdenfir          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
@@ -72,28 +72,27 @@ void	ft_putnbr_fd(int nb, int fd)
 	}
 }
 
-void print_message(char c, t_philo *philo)
+void	print_message(char c, t_philo *philo)
 {
-    long long elapsed_time;
-	
-	elapsed_time = get_timestamp() - philo->start_time;
-    pthread_mutex_lock(philo->write_lock);
-    if (!is_he_dead(philo))
-    {
-        if (c == 'd')
-            printf("%lld %d died\n", elapsed_time, philo->id);
-        else if (c == 'e')
-            printf("%lld %d is eating\n", elapsed_time, philo->id);
-        else if (c == 't')
-            printf("%lld %d is thinking\n", elapsed_time, philo->id);
-        else if (c == 's')
-            printf("%lld %d is sleeping\n", elapsed_time, philo->id);
-        else if (c == 'f')
-            printf("%lld %d has taken a fork\n", elapsed_time, philo->id);
-    }
-    pthread_mutex_unlock(philo->write_lock);
-}
+	long long	elapsed_time;
 
+	elapsed_time = get_timestamp() - philo->start_time;
+	pthread_mutex_lock(philo->write_lock);
+	if (!is_he_dead(philo))
+	{
+		if (c == 'd')
+			printf("%lld %d died\n", elapsed_time, philo->id);
+		else if (c == 'e')
+			printf("%lld %d is eating\n", elapsed_time, philo->id);
+		else if (c == 't')
+			printf("%lld %d is thinking\n", elapsed_time, philo->id);
+		else if (c == 's')
+			printf("%lld %d is sleeping\n", elapsed_time, philo->id);
+		else if (c == 'f')
+			printf("%lld %d has taken a fork\n", elapsed_time, philo->id);
+	}
+	pthread_mutex_unlock(philo->write_lock);
+}
 
 int	is_he_dead(t_philo *philo)
 {

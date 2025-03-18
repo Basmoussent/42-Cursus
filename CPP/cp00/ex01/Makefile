@@ -1,4 +1,4 @@
-SRC = phonebook.cpp
+SRC = main.cpp Contact.cpp PhoneBook.cpp
 NAME = phonebook
 CC = c++ -Wall -Wextra -Werror -std=c++98
 

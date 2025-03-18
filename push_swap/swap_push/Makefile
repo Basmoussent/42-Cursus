@@ -1,4 +1,4 @@
-CC := gcc
+CC := c++
 CFLAGS := -Wall -Wextra -Werror -g3
 
 INCDIR := include
