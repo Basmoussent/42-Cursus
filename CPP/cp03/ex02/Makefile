@@ -1,5 +1,5 @@
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
-NAME = Fixed
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
+NAME = FragTrap
 CC = c++ -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)

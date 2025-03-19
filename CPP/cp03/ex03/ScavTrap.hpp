@@ -6,14 +6,14 @@
 /*   By: bdenfir <bdenfir@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 20:24:09 by bdenfir           #+#    #+#             */
-/*   Updated: 2025/03/19 09:25:15 by bdenfir          ###   ########.fr       */
+/*   Updated: 2025/03/19 10:00:24 by bdenfir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 #include "ClapTrap.hpp"
 
-class ScavTrap: public ClapTrap
+class ScavTrap: virtual public ClapTrap
 {
 	private:
 		bool _guarding_gate;

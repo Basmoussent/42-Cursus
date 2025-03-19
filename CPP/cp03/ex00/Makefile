@@ -1,5 +1,5 @@
 SRC = main.cpp ClapTrap.cpp
-NAME = Fixed
+NAME = ClapTrap
 CC = c++ -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
