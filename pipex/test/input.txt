@@ -1,6 +1,0 @@
-pattern match
-no match here
-this line contains the pattern
-another pattern match is here
-yet another line without it
-pattern again appears here
