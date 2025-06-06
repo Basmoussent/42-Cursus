@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    volumes:
+      - ./requirements/nginx/conf:/etc/nginx/conf.d
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+    networks:
+      - inception_network
+    restart: always
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
+      - WORDPRESS_ADMIN_USER=${WP_ADMIN_USER}
+      - WORDPRESS_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+      - WORDPRESS_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WORDPRESS_TITLE=${WP_TITLE}
+    depends_on:
+      - mariadb
+    networks:
+      - inception_network
+    restart: always
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - inception_network
+    restart: always
+
+volumes:
+  wordpress_data:
+    driver: local
+  mariadb_data:
+    driver: local
+
+networks:
+  inception_network:
+    driver: bridge
