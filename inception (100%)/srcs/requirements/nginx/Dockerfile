@@ -17,5 +17,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 COPY ./tools/copy.sh /copy.sh
 RUN chmod +x /copy.sh
+EXPOSE 443
 
 CMD ["/bin/sh", "/copy.sh"]
