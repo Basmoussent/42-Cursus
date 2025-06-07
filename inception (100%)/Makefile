@@ -1,16 +1,40 @@
-all : up
+all: build run
 
-up : 
-	@docker-compose -f ./srcs/docker-compose.yml --env-file .env up -d
+data:
+	@if [ ! -d "home/bdenfir/data/mariadb" ] && [ ! -d "home/bdenfir/data/wordpress;" ]; then \
+	mkdir -p home/bdenfir/data/mariadb && mkdir -p home/bdenfir/data/wordpress; fi
 
-down : 
-	@docker-compose -f ./srcs/docker-compose.yml --env-file .env down
+build: data
+	docker compose -f srcs/docker-compose.yml build
 
-stop : 
-	@docker-compose -f ./srcs/docker-compose.yml --env-file .env stop
+run:
+	docker compose -f srcs/docker-compose.yml up -d
 
-start : 
-	@docker-compose -f ./srcs/docker-compose.yml --env-file .env start
+down:
+	docker compose -f srcs/docker-compose.yml down
 
-status : 
-	@docker ps
+clean:
+	docker compose -f srcs/docker-compose.yml down --rmi all
+
+vclean:
+	docker compose -f srcs/docker-compose.yml down --rmi all -v
+	@sudo rm -rf home
+
+fclean: vclean
+	docker system prune -af
+
+list:
+	docker ps -a
+
+volumes:
+	docker volume ls
+
+images:
+	docker image ls
+
+network:
+	docker network ls
+
+full: list volumes images network
+
+.SILENT:

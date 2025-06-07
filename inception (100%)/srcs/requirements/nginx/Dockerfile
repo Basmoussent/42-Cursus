@@ -1,22 +1,16 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
-RUN apt-get update && apt-get install -y \
-    nginx \
-    openssl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt upgrade -y && apt install -y nginx openssl gettext-base
 
-# Create directory for SSL certificates and nginx sites
-RUN mkdir -p /etc/nginx/ssl && \
-    mkdir -p /etc/nginx/sites-available
+RUN mkdir -p /etc/nginx/certs
 
-# Generate SSL certificate
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
--keyout /etc/nginx/ssl/nginx.key \
--out /etc/nginx/ssl/nginx.crt \
--subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=basmoussent.42.fr"
+-keyout /etc/nginx/certs/key-selfsigned.key \
+-out /etc/nginx/certs/cert-selfsigned.crt \
+-subj "/C=FR/ST=North/L=Paris/O=Entropy/OU=Entropy/CN=bdenfir.42.fr"
 
-COPY ./tools/copy.sh /copy.sh
-RUN chmod +x /copy.sh
-EXPOSE 443
+COPY conf/nginx.conf ./tmp/nginx.conf
 
-CMD ["/bin/sh", "/copy.sh"]
+RUN envsubst '/etc/nginx/certs key-selfsigned.key cert-selfsigned.crt bdenfir.42.fr' < /tmp/nginx.conf > /etc/nginx/sites-available/default
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
